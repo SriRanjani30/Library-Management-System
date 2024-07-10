@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System - Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .container {
+            padding: 20px;
+        }
+        .search-bar {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .search-bar input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .search-bar button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .search-bar button:hover {
+            background-color: #45a049;
+        }
+        .list {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        .list h3 {
+            margin-top: 0;
+        }
+        .list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .list li {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .list li:last-child {
+            border-bottom: none;
+        }
+        #searchResults {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Library Management System</h1>
+    </div>
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="Search for books in stock...">
+            <button onclick="searchBooks()">Search</button>
+        </div>
+        <div class="list" id="booksBorrowed">
+            <h3>Books Borrowed</h3>
+            <ul>
+                <!-- Sample list items -->
+                <li>Book Title 1</li>
+                <li>Book Title 2</li>
+                <li>Book Title 3</li>
+            </ul>
+        </div>
+        <div class="list" id="readLater">
+            <h3>Read Later List</h3>
+            <ul>
+                <!-- Sample list items -->
+                <li>Book Title 4</li>
+                <li>Book Title 5</li>
+                <li>Book Title 6</li>
+            </ul>
+        </div>
+        <div id="searchResults"></div>
+    </div>
+    <script>
+        function searchBooks() {
+            const query = document.getElementById('search').value;
+            if (query === '') {
+                alert('Please enter a book title to search.');
+                return;
+            }
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'search.php', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.onload = function () {
+                if (this.status === 200) {
+                    document.getElementById('searchResults').innerText = this.responseText;
+                } else {
+                    document.getElementById('searchResults').innerText = 'Error searching for books.';
+                }
+            };
+            xhr.send('query=' + encodeURIComponent(query));
+        }
+    </script>
+</body>
+</html>
