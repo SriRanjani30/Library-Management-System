@@ -6,37 +6,115 @@
     <title>Library Management System - Home</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background: url('Images/library.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
         .header {
-            background-color: #4CAF50;
+            background-color: rgba(76, 175, 80, 0.8);
             color: white;
             text-align: center;
             padding: 20px 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
         .container {
             padding: 20px;
             max-width: 800px;
-            margin: auto;
+            width: 100%;
+            margin: 20px auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         }
         .search-bar {
             text-align: center;
             margin-bottom: 20px;
         }
         .search-bar input[type="text"] {
-            width: 300px;
+            width: calc(100% - 130px);
+            max-width: 300px;
+            padding: 15px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+        .search-bar button {
+            padding: 15px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+            box-sizing: border-box;
+        }
+        .search-bar button:hover {
+            background-color: #45a049;
+        }
+        .list {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .list h3 {
+            margin-top: 0;
+            color: #4CAF50;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .list ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .list li {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            transition: background-color 0.3s;
+            display: flex;
+            justify-content: space-between;
+        }
+        .list li:last-child {
+            border-bottom: none;
+        }
+        .list li:hover {
+            background-color: #f4f4f4;
+        }
+        .list .add-book {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .list .add-book input[type="text"] {
+            width: calc(100% - 130px);
+            max-width: 300px;
             padding: 10px;
             margin-right: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 1em;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
         }
-        .search-bar button {
+        .list .add-book button {
             padding: 10px 20px;
             background-color: #4CAF50;
             color: white;
@@ -44,33 +122,11 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 1em;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             transition: background-color 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .search-bar button:hover {
+        .list .add-book button:hover {
             background-color: #45a049;
-        }
-        .list {
-            background-color: white;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            border-radius: 5px;
-        }
-        .list h3 {
-            margin-top: 0;
-            color: #4CAF50;
-        }
-        .list ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        .list li {
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
-        }
-        .list li:last-child {
-            border-bottom: none;
         }
         #searchResults {
             text-align: center;
@@ -79,6 +135,7 @@
             color: #333;
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="header">
@@ -91,7 +148,7 @@
         </div>
         <div class="list" id="booksBorrowed">
             <h3>Books Borrowed</h3>
-            <ul>
+            <ul id="borrowedList">
                 <!-- Sample list items -->
                 <li>Book Title 1</li>
                 <li>Book Title 2</li>
@@ -100,12 +157,13 @@
         </div>
         <div class="list" id="readLater">
             <h3>Read Later List</h3>
-            <ul>
-                <!-- Sample list items -->
-                <li>Book Title 4</li>
-                <li>Book Title 5</li>
-                <li>Book Title 6</li>
+            <ul id="readingList">
+                <!-- Dynamically populated list items will go here -->
             </ul>
+            <div class="add-book">
+                <input type="text" id="newBook" placeholder="Enter Book Title...">
+                <button onclick="addBook()">Add Book</button>
+            </div>
         </div>
         <div id="searchResults"></div>
     </div>
@@ -127,6 +185,21 @@
                 }
             };
             xhr.send('query=' + encodeURIComponent(query));
+        }
+
+        function addBook() {
+            const newBookTitle = document.getElementById('newBook').value.trim();
+            if (newBookTitle === '') {
+                alert('Please enter a book title.');
+                return;
+            }
+
+            const readingList = document.getElementById('readingList');
+            const li = document.createElement('li');
+            li.textContent = newBookTitle;
+            readingList.appendChild(li);
+
+            document.getElementById('newBook').value = ''; // Clear the input field after adding the book
         }
     </script>
 </body>
