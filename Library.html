@@ -6,55 +6,76 @@
     <title>Library Management System</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f0f2f5;
+            color: #333;
         }
         .header {
-            background-color: #4CAF50;
+            background: linear-gradient(135deg, #1de9b6, #1dc4e9);
             color: white;
-            padding: 10px 0;
+            padding: 40px 0;
             text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
         }
         .navbar {
             display: flex;
+            justify-content: center;
             background-color: #333;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         .navbar a {
-            flex: 1;
             padding: 14px 20px;
             text-align: center;
             text-decoration: none;
             color: white;
+            transition: background-color 0.3s, color 0.3s;
         }
         .navbar a:hover {
-            background-color: #ddd;
+            background-color: #1de9b6;
             color: black;
         }
         .main {
-            padding: 20px;
+            padding: 40px 20px;
             margin: 20px;
             background-color: white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
         }
         .card {
-            background-color: #f9f9f9;
-            padding: 20px;
+            background-color: #fff;
+            padding: 30px;
             margin: 20px 0;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+        }
+        .card h2 {
+            margin-top: 0;
+            font-size: 1.75em;
+            color: #1dc4e9;
         }
         .footer {
             background-color: #333;
             color: white;
             text-align: center;
-            padding: 10px 0;
+            padding: 15px 0;
             position: fixed;
             bottom: 0;
             width: 100%;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="header">
@@ -63,9 +84,9 @@
 
     <div class="navbar">
         <a href="index.html">Home</a>
-        <a href="login.html">Books</a>
-        <a href="login.html">Members</a>
-        <a href="login.html">Loans</a>
+        <a href="books.html">Books</a>
+        <a href="members.html">Members</a>
+        <a href="loans.html">Loans</a>
         <a href="contact.html">Contact</a>
     </div>
 
