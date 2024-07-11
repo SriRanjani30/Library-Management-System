@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "root@123";
+$password = "";
 $dbname = "library";
 
 // Create connection
@@ -13,17 +13,23 @@ if ($conn->connect_error) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $query = $conn->real_escape_string($_POST['query']);
-    $sql = "SELECT title, availability FROM books WHERE title LIKE '%$query%'";
-    $result = $conn->query($sql);
+    $bookId = $_POST['query'];
 
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            echo "Title: " . $row["title"] . " - Availability: " . ($row["availability"] ? "Available" : "Not Available") . "<br>";
-        }
+    $sql = $conn->prepare("SELECT book_name, availability FROM books WHERE book_id = ?");
+    $sql->bind_param("s", $bookId);
+    $sql->execute();
+    $sql->bind_result($bookName, $availability);
+    $sql->fetch();
+
+    if ($bookName) {
+        $availabilityText = $availability ? "Available" : "Not Available";
+        echo "<p>Book Name: " . htmlspecialchars($bookName) . "</p>";
+        echo "<p>Availability: " . htmlspecialchars($availabilityText) . "</p>";
     } else {
-        echo "No books found.";
+        echo "<p>No book found with ID " . htmlspecialchars($bookId) . "</p>";
     }
+
+    $sql->close();
 }
 
 $conn->close();
