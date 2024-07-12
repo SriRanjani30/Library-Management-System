@@ -27,6 +27,27 @@
             position: sticky;
             top: 0;
             z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            margin: 0;
+            flex: 1;
+        }
+        .header .logout-button {
+            padding: 10px 20px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-right: 20px;
+            transition: background-color 0.3s;
+        }
+        .header .logout-button:hover {
+            background-color: #e53935;
         }
         .container {
             padding: 20px;
@@ -140,6 +161,7 @@
 <body>
     <div class="header">
         <h1>Library Management System</h1>
+        <button class="logout-button" onclick="logout()">Logout</button>
     </div>
     <div class="container">
         <div class="search-bar">
@@ -150,9 +172,9 @@
             <h3>Books Borrowed</h3>
             <ul id="borrowedList">
                 <!-- Sample list items -->
-                <li>Book Title 1</li>
-                <li>Book Title 2</li>
-                <li>Book Title 3</li>
+                <li>Engineering Physics</li>
+                <li>Path to English</li>
+                <li>Cybersecurity in Modern Era</li>
             </ul>
         </div>
         <div class="list" id="readLater">
@@ -200,6 +222,12 @@
             readingList.appendChild(li);
 
             document.getElementById('newBook').value = ''; // Clear the input field after adding the book
+        }
+
+        function logout() {
+            // Add logout functionality here
+            alert('Logout successful.');
+            window.location.href = 'login.html';
         }
     </script>
 </body>
