@@ -6,3 +6,4 @@
 6. Place the image file in a seperate images folder.
 7. Now open the web browser and rum "http://localhost/Library.html"
 8. We have successfully deployed the Library Managment System.
+9. I used youtube to learn about hosting the webpage locally using Xampp Server.
